@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
+import { sign } from 'jsonwebtoken';
+
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 
@@ -11,8 +13,10 @@ export class UsersService {
     @InjectRepository(User) private readonly userRepository: Repository<User>
   ) { }
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    const newUser = new User();
+    Object.assign(newUser, createUserDto);
+    return await this.userRepository.save(newUser);
   }
 
   async findAll(): Promise<User[]> {
@@ -29,5 +33,18 @@ export class UsersService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  buildUserReponse(user: User): any {
+    return {
+      user: {
+        ...user,
+        token: this.generateJwt(user)
+      }
+    }
+  }
+
+  generateJwt(user: User) {
+    return sign({})
   }
 }
