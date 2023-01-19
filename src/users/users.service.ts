@@ -6,11 +6,13 @@ import { sign } from 'jsonwebtoken';
 
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private configService: ConfigService
   ) { }
 
   async create(createUserDto: CreateUserDto) {
