@@ -1,6 +1,6 @@
 import { TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from "@nestjs/typeorm";
 
-export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
+const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     useFactory: async (): Promise<TypeOrmModuleOptions> => {
         return {
             type: 'postgres',
@@ -11,7 +11,11 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
             database: process.env.DB_NAME,
             entities: [__dirname + '/../**/*.entity.{js,ts}'],
             migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+            autoLoadEntities: true,
+            synchronize: false
         }
     }
 }
+
+export default typeOrmAsyncConfig;
 

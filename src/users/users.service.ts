@@ -55,6 +55,6 @@ export class UsersService {
   }
 
   generateJwt(user: User) {
-    return sign({})
+    // return sign({})
   }
 }

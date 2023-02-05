@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { CreateUserResponse } from './interfaces/create-user-response.interface';
 
 @Controller('users')
 export class UsersController {
@@ -11,7 +12,8 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<any> {
     console.log(createUserDto);
-    return await this.usersService.create(createUserDto);
+    const user = await this.usersService.create(createUserDto);
+    return user;
   }
 
   @Get()
