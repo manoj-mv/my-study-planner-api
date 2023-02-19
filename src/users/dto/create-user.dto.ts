@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsEmail } from 'class-validator';
+import { IsEmailAlreadyExist } from '../validators/isEmailExist';
 export class CreateUserDto {
     @IsNotEmpty()
     @IsString()
@@ -6,6 +7,10 @@ export class CreateUserDto {
 
     @IsNotEmpty()
     @IsString()
+    @IsEmail()
+    @IsEmailAlreadyExist({
+        message: "Email already exists."
+    })
     readonly email: string;
 
     @IsNotEmpty()

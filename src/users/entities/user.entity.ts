@@ -31,6 +31,5 @@ export class User {
     @BeforeInsert()
     async hashPassword() {
         this.password = await hash(this.password, 13);
-        this.refresh_token = await hash(this.refresh_token, 13);
     }
 }

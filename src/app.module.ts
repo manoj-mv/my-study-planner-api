@@ -11,8 +11,6 @@ import { AuthModule } from './auth/auth.module';
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
     ConfigModule.forRoot(),
 
-    UsersModule,
-
     AuthModule
   ],
   controllers: [AppController],
