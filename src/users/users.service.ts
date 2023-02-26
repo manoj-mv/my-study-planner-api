@@ -55,8 +55,6 @@ export class UsersService {
     const tokens = await this.generateJwtTokens(user.user_id, user.email);
     this.updateRtHash(tokens.refreshToken, user.user_id);
     return {
-      userId: user.user_id,
-      userName: user.user_name,
       tokens: tokens
     }
   }

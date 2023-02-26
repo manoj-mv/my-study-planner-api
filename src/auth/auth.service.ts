@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { compare } from 'bcrypt'
 
@@ -16,5 +16,25 @@ export class AuthService {
             return loginResp;
         }
         return null;
+    }
+
+    async refreshToken(email: string, refreshToken: string) {
+        const user = await this.userService.findByEmail(email);
+        console.log(user);
+
+        if (!user || !user.refresh_token) {
+            console.log('reached');
+
+            throw new ForbiddenException('Access Denied.')
+        }
+
+        const refreshTokenMatches = await compare(refreshToken, user.refresh_token);
+
+        if (!refreshTokenMatches) {
+            console.log('reached 1');
+            throw new ForbiddenException('Access Denied.')
+        } else {
+            return this.userService.buildUserReponse(user);
+        }
     }
 }
